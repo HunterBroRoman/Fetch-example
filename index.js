@@ -28,11 +28,23 @@ import pokemonCatdTpl from '...templetes/fgfgf/'; // получаем разме
 
 const refs = {
   cardConteiner: document.querySelector(".js-card-container"),
+  searchForm: document.querySelector('.form-data'),
 };// рефаем место в HTML где потом будет карточка
 
-fetchPokemon(1)
-.then(renderPocemonCard)// т.к. из функции возвращается Promise (поэтому then и catch)
-.catch(err => console.log(Error));
+
+refs.searchForm.addEventListener('submit', onSearch);
+
+function onSearch (e)  {
+    e.preventDefault();
+
+    const form = e.currentTarget;
+    const searchQuery = form.elements.query.value;// при сабмите получаем ссылку на value инпута
+
+    fetchPokemon(searchQuery)// вводим то что ввели в инпут
+    .then(renderPocemonCard)// т.к. из функции возвращается Promise (поэтому then и catch)
+    .catch(err => console.log(Error))
+    .finally(() => form.reset()); // очищаем данные из формы при любых обстоятельствах
+}
 
 function fetchPokemon(pokemonId) {
   return fetch(`htpp:/google/&vbvbv/cbcbcb/${pokemonId}`).then((response) => {
