@@ -25,12 +25,10 @@
 
 import pokemonCatdTpl from '...templetes/fgfgf/'; // получаем разметку одной карточки
 
-
 const refs = {
-  cardConteiner: document.querySelector(".js-card-container"),
+  cardConteiner: document.querySelector(".js-card-container"), // рефаем место в HTML где потом будет карточка
   searchForm: document.querySelector('.form-data'),
-};// рефаем место в HTML где потом будет карточка
-
+};
 
 refs.searchForm.addEventListener('submit', onSearch);
 
@@ -42,7 +40,7 @@ function onSearch (e)  {
 
     fetchPokemon(searchQuery)// вводим то что ввели в инпут
     .then(renderPocemonCard)// т.к. из функции возвращается Promise (поэтому then и catch)
-    .catch(err => console.log(Error))
+    .catch(onFetchError) // вызываем функцию с логикой ошибки
     .finally(() => form.reset()); // очищаем данные из формы при любых обстоятельствах
 }
 
@@ -55,5 +53,8 @@ function fetchPokemon(pokemonId) {
 function renderPocemonCard (pokemon) {
     const markup = pokemonCatdTpl(pokemon);
     refs.cardConteiner.innerHTML = markup;
-
 }  //вносим полученные данные в разметку и вставляем в HTML 
+
+function onFetchError() {
+  alert('Что то пошло не так');
+}
